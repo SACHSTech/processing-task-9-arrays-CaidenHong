@@ -1,36 +1,61 @@
 import processing.core.PApplet;
 
 public class Sketch extends PApplet {
-	
-	
-  /**
-   * Called once at the beginning of execution, put your size all in this method
-   */
-  public void settings() {
-	// put your size call here
-    size(400, 400);
-  }
 
-  /** 
-   * Called once at the beginning of execution.  Add initial set up
-   * values here i.e background, stroke, fill etc.
-   */
-  public void setup() {
-    background(210, 255, 173);
-  }
-
-  /**
-   * Called repeatedly, anything drawn to the screen goes here
-   */
-  public void draw() {
-	  
-	// sample code, delete this stuff
-    stroke(128);
-    line(150, 25, 270, 350);  
-
-    stroke(255);
-    line(50, 125, 70, 50);  
-  }
+  float[] circleY = new float[50];
+  float[] snowfall = new float[50];
+  float[] mousePositionsX = new float[25];
+  float[] mousePositionsY = new float[25];
+  int snowSpeed = 3;
+  int num = 25;
+  int index = 0;
+  float playerX = 50;
+  float playerY = 750;
   
-  // define other methods down here.
+  public void settings() {
+    size(800, 800);
+  }
+
+  public void setup() {
+    background(0);
+    for (int i = 0; i < 50; i++) {
+      circleY[i] = random(0, 800);
+    }
+    for (int i = 0; i < 50; i++) {
+      snowfall[i] = 5;
+    }
+  }
+
+  public void draw() {
+
+    background(0);
+
+    // Drawing falling snow
+    for (int circleX = 0; circleX < 50; circleX++) {
+      ellipse(circleX*16, circleY[circleX], 12, 12);
+    }
+  
+    for (int i = 0; i < 50; i++) {
+      circleY[i] += snowSpeed;
+      if (circleY[i] >= 800) {
+        circleY[i] = 0;
+        snowfall[i] += 5;
+      }
+    }
+
+    ellipse(playerX, playerY, 30, 30);
+  }
+  public void keyPressed() {
+    if (keyCode == UP) {
+      snowSpeed = 1;
+    }
+    if (keyCode == DOWN) {
+      snowSpeed = 5;
+    }
+  }
+
+  public void keyReleased() {
+    snowSpeed = 3;
+  }
+
 }
